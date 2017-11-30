@@ -11,10 +11,11 @@
   if (typeof window !== 'undefined' && typeof window.CustomEvent !== 'function') {
     var CustomEventPollyfill = function (
       event,
-      params = { bubbles: false, cancelable: false, detail: undefined }
+      userParams
     ) {
+      var params = userParams || {};
       var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      evt.initCustomEvent(event, params.bubbles || false, params.cancelable || false, params.detail || undefined);
       return evt;
     };
 
