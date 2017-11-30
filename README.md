@@ -1,6 +1,6 @@
 # Window Scroll Manager
 
-[Demo](https://stanko.github.io/window-scroll-manager)
+[Demo](https://stanko.github.io/window-scroll-manager/)
 
 ## What it this?
 
