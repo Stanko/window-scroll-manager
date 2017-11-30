@@ -24,6 +24,11 @@
   }
 
   function ScrollManager(userInterval) {
+    if (typeof window === 'undefined') {
+      // Silently return null if it is used on server
+      return null;
+    }
+
     var interval = userInterval || INTERVAL;
 
     instancesCount++;
