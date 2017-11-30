@@ -6,7 +6,7 @@
 
 Listening to window's `onscroll` event is very expensive and ineffective,
 so this library takes different approach on it.
-It is a singleton which sets interaval (60 times per second) when it checks for window scroll position.
+It is a *singleton* which sets interaval (60 times per second) when it checks for window scroll position.
 If the scroll position has changed it dispatches custom event (`window-scroll`) with the new position.
 
 ## Usage
@@ -17,9 +17,9 @@ Get it from [npm](https://www.npmjs.com/package/window-sroll-manager):
 npm install window-scroll-manager
 ```
 
-Import it and use it in your code:
+Import it and use it:
 
-```
+```js
 import ScrollManager from 'window-scroll-manager'
 
 const sm = new ScrollManager();
