@@ -25,7 +25,7 @@ import ScrollManager from 'window-scroll-manager'
 const sm = new ScrollManager();
 
 window.addEventListener('window-scroll', function(e) {
-  console.log('Scroll position is: ' + e.detail.scrollPosition;
+  console.log('Scroll position is: ' + e.detail.scrollPosition);
 });
 ```
 
