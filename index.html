@@ -126,7 +126,7 @@
 
     window.addEventListener('window-scroll', function(e) {
       valueDiv.innerHTML = e.detail.scrollPosition;
-      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPosition + 'deg)';
+      rotateDiv.style.transform = 'rotate(' + parseInt(e.detail.scrollPosition, 10) + 'deg)';
     });
 
   </script>
