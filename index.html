@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Window Scroll Manager Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f3f3f0;
+      height: 300vh;
+      font-size: 15px;
+    }
+
+    .ScrollPosition {
+      position: fixed;
+      height: 220px;
+      width: 100%;
+      bottom: 40px;
+      text-align: center;
+    }
+
+    @media (min-width: 600px) {
+      .ScrollPosition {
+        top: 50%;
+        margin-top: -110px;
+        bottom: auto;
+      }
+    }
+
+    .ScrollPosition-content {
+      position: relative;
+      z-index: 10;
+      line-height: 20px;
+      height: 120px;
+      margin-top: 50px;
+    }
+
+    .ScrollPosition-value {
+      font-size: 80px;
+      position: relative;
+      z-index: 10;
+      line-height: 1;
+      font-weight: 300;
+    }
+
+    .ScrollPosition-rotate {
+      background: #fff;
+      border: 1px solid #000;
+      height: 220px;
+      left: 50%;
+      margin-left: -110px;
+      position: absolute;
+      top: 0;
+      width: 220px;
+      z-index: 0;
+    }
+
+    .Content {
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: normal;
+      font-size: 2em;
+      line-height: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .Links {
+      font-size: 18px;
+    }
+
+    .Links a {
+      border-bottom: 1px solid transparent;
+      color: #e54d42;
+      text-decoration: none;
+      transition: border 250ms;
+    }
+
+    .Links a:hover {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class='Content'>
+    <h1>Window scroll manager demo</h1>
+    <div class="Links">
+      <a href="stanko.github.io">My Blog</a> &bull;
+      <a href="https://github.com/Stanko/window-sroll-manager">GitHub</a> &bull;
+      <a href="https://www.npmjs.com/package/window-sroll-manager">npm</a>
+    </div>
+  </div>
+  <div class="ScrollPosition">
+    <div class="ScrollPosition-rotate"></div>
+    <div class="ScrollPosition-content">
+      <div>You scrolled</div>
+      <span class="ScrollPosition-value"></span>
+      <div>px</div>
+    </div>
+  </div>
+
+  <script src="../source/index.js"></script>
+  <script>
+    var sm = new ScrollManager();
+
+    var valueDiv = document.querySelector('.ScrollPosition-value');
+    var rotateDiv = document.querySelector('.ScrollPosition-rotate');
+
+    window.addEventListener('window-scroll', function(e) {
+      valueDiv.innerHTML = e.detail.scrollPosition;
+      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPosition + 'deg)';
+    });
+
+  </script>
+</body>
+</html>

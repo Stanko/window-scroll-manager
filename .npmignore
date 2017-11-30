@@ -1,0 +1,8 @@
+.node_modules
+.DS_STORE
+.module-cache
+*.log*
+_nogit
+
+
+index.html

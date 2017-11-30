@@ -1,0 +1,23 @@
+{
+  "name": "window-scroll-manager",
+  "version": "0.1.0",
+  "description": "60fps window scroll tracking event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Stanko/window-scroll-manager.git"
+  },
+  "keywords": [
+    "scroll"
+  ],
+  "author": "Stanko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Stanko/window-scroll-manager/issues"
+  },
+  "homepage": "https://github.com/Stanko/window-scroll-manager#readme",
+  "devDependencies": {}
+}
