@@ -3,19 +3,22 @@
 (function () {
   var instance = null;
   var instancesCount = 0;
+  var ticking = false;
 
-  var INTERVAL = 16;
   var EVENT_NAME = 'window-scroll';
 
+  // ------------------------------------------------
   // CustomEvent polyfill
+  // ------------------------------------------------
   if (typeof window !== 'undefined' && typeof window.CustomEvent !== 'function') {
-    var CustomEventPollyfill = function (
-      event,
-      userParams
-    ) {
-      var params = userParams || {};
+    var CustomEventPollyfill = function (event, userParams) {
+      var params = {
+        bubbles: userParams.bubbles || false,
+        cancelable: userParams.cancelable || false,
+        detail: userParams.detail || undefined
+      };
       var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles || false, params.cancelable || false, params.detail || undefined);
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
       return evt;
     };
 
@@ -24,48 +27,49 @@
     window.CustomEvent = CustomEventPollyfill;
   }
 
-  function ScrollManager(userInterval) {
+  // ------------------------------------------------
+  // Scroll manager
+  // ------------------------------------------------
+  function ScrollManager() {
     if (typeof window === 'undefined') {
       // Silently return null if it is used on server
       return null;
     }
 
-    var interval = userInterval || INTERVAL;
-
+    // Increase reference count
     instancesCount++;
 
+    // If singleton instance exists, return it rather than creating a new one
     if (instance) {
       return instance;
     }
 
+    // Save singleton instance
     instance = this;
 
     // Bind handlers
-    this.handleInterval = this.handleInterval.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
-    this.intervalID = setInterval(this.handleInterval, interval);
+    // Add scroll listener
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   ScrollManager.prototype.removeListener = function () {
     instancesCount--;
 
+    // There is not components listening to our event
     if (instancesCount === 0) {
-      // Remove and reset interval/animationFrame
-      clearInterval(this.intervalID);
-      this.intervalID = null;
-      // Clear singleton instance
-      instance = null;
+      this.destroy();
     }
   };
 
   ScrollManager.prototype.destroy = function () {
-    instancesCount = 0;
+    // Remove event listener
+    window.removeEventListener('scroll', this.handleScroll);
 
-    // Remove and reset interval/animationFrame
-    clearInterval(this.intervalID);
-    this.intervalID = null;
-    // Clear singleton instance
+    // Clear singleton instance and count
     instance = null;
+    instancesCount = 0;
   };
 
   ScrollManager.prototype.getScrollPosition = function () {
@@ -73,21 +77,25 @@
     return window.scrollY || document.documentElement.scrollTop;
   };
 
-  ScrollManager.prototype.handleInterval = function () {
-    var newScrollPosition = this.getScrollPosition();
 
+  ScrollManager.prototype.handleScroll = function () {
     // Fire the event only when scroll position is changed
-    if (newScrollPosition !== this.scrollPosition) {
-      this.scrollPosition = newScrollPosition;
+    if (!ticking) {
+      ticking = true;
 
-      var event = new CustomEvent(EVENT_NAME, {
-        detail: {
-          scrollPosition: newScrollPosition
-        }
+      window.requestAnimationFrame(() => {
+        this.scrollPosition = this.getScrollPosition();
+
+        var event = new CustomEvent(EVENT_NAME, {
+          detail: {
+            scrollPosition: this.scrollPosition
+          }
+        });
+
+        // Dispatch the event.
+        window.dispatchEvent(event);
+        ticking = false;
       });
-
-      // Dispatch the event.
-      window.dispatchEvent(event);
     }
   };
 

@@ -112,7 +112,7 @@
     <div class="ScrollPosition-rotate"></div>
     <div class="ScrollPosition-content">
       <div>You scrolled</div>
-      <span class="ScrollPosition-value">&nbsp;</span>
+      <span class="ScrollPosition-value">0</span>
       <div>px</div>
     </div>
   </div>
@@ -126,7 +126,7 @@
 
     window.addEventListener('window-scroll', function(e) {
       valueDiv.innerHTML = parseInt(e.detail.scrollPosition, 10);
-      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPosition + 'deg)';
+      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPosition / 2 + 'deg)';
     });
 
   </script>
