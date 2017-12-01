@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
   var instance = null;
   var instancesCount = 0;
   var ticking = false;
@@ -11,11 +11,11 @@
   // CustomEvent polyfill
   // ------------------------------------------------
   if (typeof window !== 'undefined' && typeof window.CustomEvent !== 'function') {
-    var CustomEventPollyfill = function (event, userParams) {
+    var CustomEventPollyfill = function(event, userParams) {
       var params = {
         bubbles: userParams.bubbles || false,
         cancelable: userParams.cancelable || false,
-        detail: userParams.detail || undefined
+        detail: userParams.detail || undefined // eslint-disable-line no-undefined
       };
       var evt = document.createEvent('CustomEvent');
       evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
@@ -54,7 +54,7 @@
     window.addEventListener('scroll', this.handleScroll);
   }
 
-  ScrollManager.prototype.removeListener = function () {
+  ScrollManager.prototype.removeListener = function() {
     instancesCount--;
 
     // There is not components listening to our event
@@ -63,7 +63,7 @@
     }
   };
 
-  ScrollManager.prototype.destroy = function () {
+  ScrollManager.prototype.destroy = function() {
     // Remove event listener
     window.removeEventListener('scroll', this.handleScroll);
 
@@ -72,23 +72,24 @@
     instancesCount = 0;
   };
 
-  ScrollManager.prototype.getScrollPosition = function () {
+  ScrollManager.prototype.getScrollPosition = function() {
     // Get scroll position, with IE fallback
     return window.scrollY || document.documentElement.scrollTop;
   };
 
 
-  ScrollManager.prototype.handleScroll = function () {
+  ScrollManager.prototype.handleScroll = function() {
     // Fire the event only when scroll position is changed
     if (!ticking) {
       ticking = true;
+      var self = this;
 
-      window.requestAnimationFrame(() => {
-        this.scrollPosition = this.getScrollPosition();
+      window.requestAnimationFrame(function() {
+        self.scrollPosition = self.getScrollPosition();
 
         var event = new CustomEvent(EVENT_NAME, {
           detail: {
-            scrollPosition: this.scrollPosition
+            scrollPosition: self.scrollPosition
           }
         });
 
@@ -102,9 +103,9 @@
   if (typeof module !== 'undefined' && module.exports) {
     ScrollManager.default = ScrollManager;
     module.exports = ScrollManager;
-  } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+  } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) { // eslint-disable-line no-undef
     // register as 'classnames', consistent with npm package name
-    define('window-scroll-manager', [], function () {
+    define('window-scroll-manager', [], function() { // eslint-disable-line no-undef
       return ScrollManager;
     });
   } else {

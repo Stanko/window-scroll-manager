@@ -1,10 +1,11 @@
 {
   "name": "window-scroll-manager",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Small library that broadcasts more performant 'window-scroll' events.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint index.js || true"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
     "url": "https://github.com/Stanko/window-scroll-manager/issues"
   },
   "homepage": "https://github.com/Stanko/window-scroll-manager#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "eslint-config-es5": "^0.5.0"
+  }
 }

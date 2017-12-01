@@ -1,0 +1,17 @@
+env:
+  browser: true
+extends: 'eslint-config-es5'
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  func-names: 0
