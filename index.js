@@ -59,7 +59,7 @@
   };
 
   ScrollManager.prototype.destroy = function () {
-    instancesCount == 0;
+    instancesCount = 0;
 
     // Remove and reset interval/animationFrame
     clearInterval(this.intervalID);
