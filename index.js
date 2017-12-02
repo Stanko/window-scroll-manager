@@ -104,7 +104,7 @@
     ScrollManager.default = ScrollManager;
     module.exports = ScrollManager;
   } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) { // eslint-disable-line no-undef
-    // register as 'classnames', consistent with npm package name
+    // register as 'window-scroll-manager', consistent with npm package name
     define('window-scroll-manager', [], function() { // eslint-disable-line no-undef
       return ScrollManager;
     });
