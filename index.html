@@ -17,25 +17,47 @@
       padding: 0;
     }
 
+    html {
+      font-size: 10px;
+    }
+
+    @media (min-width: 1500px) {
+      html {
+        font-size: 12px;
+      }
+    }
+
+    @media (min-width: 2000px) {
+      html {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 2500px) {
+      html {
+        font-size: 15px;
+      }
+    }
+
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background: #f3f3f0;
       height: 300vh;
-      font-size: 15px;
+      font-size: 1.8rem;
     }
 
     .ScrollPosition {
       position: fixed;
-      height: 220px;
+      height: 22rem;
       width: 100%;
-      bottom: 40px;
+      bottom: 4rem;
       text-align: center;
     }
 
-    @media (min-width: 600px) {
+    @media (min-width: 60rem) {
       .ScrollPosition {
         top: 50%;
-        margin-top: -110px;
+        margin-top: -11rem;
         bottom: auto;
       }
     }
@@ -43,13 +65,13 @@
     .ScrollPosition-content {
       position: relative;
       z-index: 10;
-      line-height: 20px;
-      height: 120px;
-      margin-top: 50px;
+      line-height: 2rem;
+      height: 12rem;
+      margin-top: 5rem;
     }
 
     .ScrollPosition-value {
-      font-size: 80px;
+      font-size: 8rem;
       position: relative;
       z-index: 10;
       line-height: 1;
@@ -59,31 +81,31 @@
     .ScrollPosition-rotate {
       background: #fff;
       border: 1px solid #000;
-      height: 220px;
+      height: 22rem;
       left: 50%;
-      margin-left: -110px;
+      margin-left: -11rem;
       position: absolute;
       top: 0;
-      width: 220px;
+      width: 22rem;
       z-index: 0;
     }
 
     .Content {
       margin: 0 auto;
-      max-width: 800px;
-      padding: 30px 20px;
+      max-width: 50rem;
+      padding: 3rem 2rem;
       text-align: center;
     }
 
     h1 {
       font-weight: normal;
-      font-size: 2em;
-      line-height: 1.2em;
-      margin-bottom: 20px;
+      font-size: 3.6rem;
+      line-height: 4rem;
+      margin-bottom: 2rem;
     }
 
     .Links {
-      font-size: 18px;
+      font-size: 1.8rem;
     }
 
     .Links a {
