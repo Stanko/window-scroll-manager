@@ -85,7 +85,13 @@
       var self = this;
 
       window.requestAnimationFrame(function() {
-        self.scrollPosition = self.getScrollPosition();
+        var scrollPosition = self.getScrollPosition();
+
+        if (scrollPosition < 0) {
+          scrollPosition = 0;
+        }
+
+        self.scrollPosition = scrollPosition;
 
         var event = new CustomEvent(EVENT_NAME, {
           detail: {

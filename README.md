@@ -18,6 +18,8 @@ but I tried to take it one step further by making one scroll manager.
 Manager is a [singleton](https://en.wikipedia.org/wiki/Singleton_pattern) instance that broadcasts custom event
 `window-scroll`, that can be listened to, rather than `scroll` directly.
 
+One note for Safari, negative scroll values will be returned as 0.
+
 Please note that version `0.2.x` got rid of the `setInterval` approach.
 
 ## Usage
