@@ -4,7 +4,7 @@ Small library that broadcasts more performant `window-scroll` events.
 
 [Demo](https://stanko.github.io/window-scroll-manager/)
 
-## What it this?
+## What is this?
 
 Listening to window `onscroll` event is very expensive and ineffective,
 so this library tries to get better performance out of it.
