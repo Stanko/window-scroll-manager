@@ -4,24 +4,33 @@
   var instance = null;
   var instancesCount = 0;
   var ticking = false;
-  var supportsPassiveOption = false;
 
   var EVENT_NAME = 'window-scroll';
 
   // ------------------------------------------------
-  // Passive event support detection
+  // Passive events support detection
   // ------------------------------------------------
-  if (typeof window !== 'undefined') {
-    // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom/passiveeventlisteners.js
-    try {
-      var opts = Object.defineProperty({}, 'passive', {
-        get: function() {
-          supportsPassiveOption = true;
-        }
+  function detectPassiveEvents() {
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      var passive = false;
+      var options = Object.defineProperty({}, 'passive', {
+        get: function() { passive = true; }
       });
-      window.addEventListener('test', null, opts);
-    } catch (e) {}
+      // note: have to set and remove a no-op listener instead of null
+      // (which was used previously), becasue Edge v15 throws an error
+      // when providing a null callback.
+      // https://github.com/rafrex/detect-passive-events/pull/3
+      var noop = function() {};
+      window.addEventListener('testPassiveEventSupport', noop, options);
+      window.removeEventListener('testPassiveEventSupport', noop, options);
+
+      return passive;
+    }
+
+    return false;
   }
+
+  var supportsPassiveEvents = detectPassiveEvents();
 
   // ------------------------------------------------
   // CustomEvent polyfill
@@ -67,7 +76,7 @@
     this.handleScroll = this.handleScroll.bind(this);
 
     // Use passive listener when supported with fallback to capture option
-    this.eventListenerOptions = supportsPassiveOption ? { passive: true } : true;
+    this.eventListenerOptions = supportsPassiveEvents ? { passive: true } : true;
 
     // Add scroll listener
     window.addEventListener('scroll', this.handleScroll, this.eventListenerOptions);
