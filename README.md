@@ -1,5 +1,8 @@
 # Window Scroll Manager
 
+[![npm version](https://img.shields.io/npm/v/window-scroll-manager.svg?style=flat-square)](https://www.npmjs.com/package/window-scroll-manager)
+[![npm downloads](https://img.shields.io/npm/dm/window-scroll-manager.svg?style=flat-square)](https://www.npmjs.com/package/window-scroll-manager)
+
 Small library that broadcasts more performant `window-scroll` events.
 
 [Demo](https://stanko.github.io/window-scroll-manager/)
