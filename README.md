@@ -4,6 +4,8 @@ Small library that broadcasts more performant `window-scroll` events.
 
 [Demo](https://stanko.github.io/window-scroll-manager/)
 
+[Changelog](CHANGELOG.md)
+
 ## What is this?
 
 Listening to window `onscroll` event is very expensive and ineffective,
@@ -24,7 +26,7 @@ Please note that version `0.2.x` got rid of the `setInterval` approach.
 
 ## Usage
 
-Get it from [npm](https://www.npmjs.com/package/window-sroll-manager):
+Get it from [npm](https://www.npmjs.com/package/window-scroll-manager):
 
 ```sh
 npm install window-scroll-manager

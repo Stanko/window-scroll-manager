@@ -1,6 +1,6 @@
 {
   "name": "window-scroll-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small library that broadcasts more performant 'window-scroll' events.",
   "main": "index.js",
   "scripts": {
