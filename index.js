@@ -4,8 +4,24 @@
   var instance = null;
   var instancesCount = 0;
   var ticking = false;
+  var supportsPassiveOption = false;
 
   var EVENT_NAME = 'window-scroll';
+
+  // ------------------------------------------------
+  // Passive event support detection
+  // ------------------------------------------------
+  if (typeof window !== 'undefined') {
+    // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom/passiveeventlisteners.js
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+          supportsPassiveOption = true;
+        }
+      });
+      window.addEventListener('test', null, opts);
+    } catch (e) {}
+  }
 
   // ------------------------------------------------
   // CustomEvent polyfill
@@ -50,8 +66,11 @@
     // Bind handlers
     this.handleScroll = this.handleScroll.bind(this);
 
+    // Use passive listener when supported with fallback to capture option
+    this.eventListenerOptions = supportsPassiveOption ? { passive: true } : true;
+
     // Add scroll listener
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll, this.eventListenerOptions);
   }
 
   ScrollManager.prototype.removeListener = function() {
@@ -65,7 +84,7 @@
 
   ScrollManager.prototype.destroy = function() {
     // Remove event listener
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll, this.eventListenerOptions);
 
     // Clear singleton instance and count
     instance = null;
