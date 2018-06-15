@@ -147,8 +147,8 @@
     var rotateDiv = document.querySelector('.ScrollPosition-rotate');
 
     window.addEventListener('window-scroll', function(e) {
-      valueDiv.innerHTML = parseInt(e.detail.scrollPosition, 10);
-      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPosition / 2 + 'deg)';
+      valueDiv.innerHTML = parseInt(e.detail.scrollPositionY, 10);
+      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPositionY / 2 + 'deg)';
     });
 
   </script>

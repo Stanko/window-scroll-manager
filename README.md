@@ -38,7 +38,8 @@ import ScrollManager from 'window-scroll-manager'
 const sm = new ScrollManager();
 
 window.addEventListener('window-scroll', function(e) {
-  console.log('Scroll position is: ' + e.detail.scrollPosition);
+  console.log('Vertical scroll position is: ' + e.detail.scrollPositionY);
+  console.log('Horizontal scroll position is: ' + e.detail.scrollPositionX);
 });
 ```
 
@@ -46,14 +47,24 @@ window.addEventListener('window-scroll', function(e) {
 
 ## API
 
-  * `getScrollPosition()` - returns current window scroll position.
+  * `getScrollPosition()` - returns current window scroll position object.
+    ```js
+    {
+      scrollPositionX: 0,
+      scrollPositionY: 100,
+    }
+    ```
   * `destroy()` - destroys the singleton instance and removes `scroll` listener.
   * `removeListener()` - reduces internal reference counter by one, and if it reaches 0 destroys the instance. Reference counter is increased every time `new ScrollManager` is called. For example, this is useful when scroll manager is used in React high order component (to track if any component is still using it). Use with caution.
 
 ```js
 const sm = new ScrollManager();
 
-console.log(sm.getScrollPosition()); // -> 0
+console.log(sm.getScrollPosition());
+// -> { scrollPositionX: 0, scrollPositionY: 0 }
 
-sm.destroy();
+window.addEventListener('window-scroll', function(e) {
+  console.log(e.detail.scrollPositionX);
+  console.log(e.detail.scrollPositionY);
+});
 ```

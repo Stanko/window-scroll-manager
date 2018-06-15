@@ -74,29 +74,31 @@
 
   ScrollManager.prototype.getScrollPosition = function() {
     // Get scroll position, with IE fallback
-    return window.scrollY || document.documentElement.scrollTop;
+    return {
+      scrollPositionY: window.scrollY || document.documentElement.scrollTop,
+      scrollPositionX: window.scrollX || document.documentElement.scrollLeft
+    };
   };
 
-
   ScrollManager.prototype.handleScroll = function() {
-    // Fire the event only when scroll position is changed
+    // Fire the event only once per requestAnimationFrame
     if (!ticking) {
       ticking = true;
       var self = this;
 
       window.requestAnimationFrame(function() {
-        var scrollPosition = self.getScrollPosition();
+        var detail = self.getScrollPosition();
 
-        if (scrollPosition < 0) {
-          scrollPosition = 0;
+        // Disable overscrolling in safari
+        if (detail.scrollPositionY < 0) {
+          detail.scrollPositionY = 0;
+        }
+        if (detail.scrollPositionX < 0) {
+          detail.scrollPositionX = 0;
         }
 
-        self.scrollPosition = scrollPosition;
-
         var event = new CustomEvent(EVENT_NAME, {
-          detail: {
-            scrollPosition: self.scrollPosition
-          }
+          detail: detail
         });
 
         // Dispatch the event.
