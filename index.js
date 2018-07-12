@@ -102,9 +102,20 @@
 
   ScrollManager.prototype.getScrollPosition = function() {
     // Get scroll position, with IE fallback
+    var scrollPositionY = window.scrollY || document.documentElement.scrollTop;
+    var scrollPositionX = window.scrollX || document.documentElement.scrollLeft;
+
+    // Disable overscrolling in safari
+    if (scrollPositionY < 0) {
+      scrollPositionY = 0;
+    }
+    if (scrollPositionX < 0) {
+      scrollPositionX = 0;
+    }
+
     return {
-      scrollPositionY: window.scrollY || document.documentElement.scrollTop,
-      scrollPositionX: window.scrollX || document.documentElement.scrollLeft
+      scrollPositionY: scrollPositionY,
+      scrollPositionX: scrollPositionX
     };
   };
 
@@ -115,18 +126,8 @@
       var self = this;
 
       window.requestAnimationFrame(function() {
-        var detail = self.getScrollPosition();
-
-        // Disable overscrolling in safari
-        if (detail.scrollPositionY < 0) {
-          detail.scrollPositionY = 0;
-        }
-        if (detail.scrollPositionX < 0) {
-          detail.scrollPositionX = 0;
-        }
-
         var event = new CustomEvent(EVENT_NAME, {
-          detail: detail
+          detail: self.getScrollPosition()
         });
 
         // Dispatch the event.
