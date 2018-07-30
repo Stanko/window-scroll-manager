@@ -115,6 +115,8 @@
 
     return {
       scrollPositionY: scrollPositionY,
+      // Alias for scrollPositionY for backwards compatibility
+      scrollPosition: scrollPositionY,
       scrollPositionX: scrollPositionX
     };
   };

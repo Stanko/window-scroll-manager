@@ -1,12 +1,23 @@
 # Changelog
 
+### v1.1.1
+
+30.07.2018.
+
+**Add**
+
+* Passive events are used by default if browser supports them [#1](https://github.com/Stanko/window-scroll-manager/pull/1)
+
+
+-----
+
 ### v1.1.0
 
 15.06.2018.
 
 **Changed**
 
-* Passive events are used by default if browser supports them [#1](https://github.com/Stanko/window-scroll-manager/pull/1)
+* Added `scrollPosition` as an `scrollPositionY` alias for backwards compatibility
 
 
 -----
