@@ -4,7 +4,7 @@
   "description": "Small library that broadcasts more performant 'window-scroll' events.",
   "main": "index.js",
   "scripts": {
-    "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint index.js || true"
   },
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Stanko/window-scroll-manager#readme",
   "devDependencies": {
-    "eslint": "^4.12.1",
+    "eslint": "^5.10.0",
     "eslint-config-es5": "^0.5.0"
   }
 }
