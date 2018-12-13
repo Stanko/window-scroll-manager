@@ -17,7 +17,7 @@
         get: function() { passive = true; }
       });
       // note: have to set and remove a no-op listener instead of null
-      // (which was used previously), becasue Edge v15 throws an error
+      // (which was used previously), because Edge v15 throws an error
       // when providing a null callback.
       // https://github.com/rafrex/detect-passive-events/pull/3
       var noop = function() {};
@@ -114,9 +114,9 @@
     }
 
     return {
-      scrollPositionY: scrollPositionY,
       // Alias for scrollPositionY for backwards compatibility
       scrollPosition: scrollPositionY,
+      scrollPositionY: scrollPositionY,
       scrollPositionX: scrollPositionX
     };
   };
@@ -125,15 +125,14 @@
     // Fire the event only once per requestAnimationFrame
     if (!ticking) {
       ticking = true;
-      var self = this;
+      var event = new CustomEvent(EVENT_NAME, {
+        detail: this.getScrollPosition()
+      });
+
+      // Dispatch the event.
+      window.dispatchEvent(event);
 
       window.requestAnimationFrame(function() {
-        var event = new CustomEvent(EVENT_NAME, {
-          detail: self.getScrollPosition()
-        });
-
-        // Dispatch the event.
-        window.dispatchEvent(event);
         ticking = false;
       });
     }

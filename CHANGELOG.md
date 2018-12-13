@@ -1,5 +1,14 @@
 # Changelog
 
+### v1.1.2
+
+30.07.2018.
+
+**Changed**
+
+* Custom event is broadcasted out of `requestAnimationFrame`. This prevents waiting for double `rAF` calls if event handler is using it as well.
+
+-----
 
 ### v1.1.2
 

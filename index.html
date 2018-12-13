@@ -147,8 +147,10 @@
     var rotateDiv = document.querySelector('.ScrollPosition-rotate');
 
     window.addEventListener('window-scroll', function(e) {
-      valueDiv.innerHTML = parseInt(e.detail.scrollPositionY, 10);
-      rotateDiv.style.transform = 'rotate(' + e.detail.scrollPositionY / 2 + 'deg)';
+      requestAnimationFrame(function() {
+        valueDiv.innerHTML = parseInt(e.detail.scrollPositionY, 10);
+        rotateDiv.style.transform = 'rotate(' + e.detail.scrollPositionY / 2 + 'deg)';
+      });
     });
 
   </script>
