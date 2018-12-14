@@ -35,21 +35,18 @@
   // ------------------------------------------------
   // CustomEvent polyfill
   // ------------------------------------------------
-  if (typeof window !== 'undefined' && typeof window.CustomEvent !== 'function') {
-    var CustomEventPollyfill = function(event, userParams) {
-      var params = {
-        bubbles: userParams.bubbles || false,
-        cancelable: userParams.cancelable || false,
-        detail: userParams.detail || undefined // eslint-disable-line no-undefined
-      };
+  if (
+    typeof window !== 'undefined' &&
+    typeof window.CustomEvent !== 'function' &&
+    typeof window.CustomEvent !== 'object'
+  ) {
+    var CustomEventPolyfill = function(event, bubbles, cancelable, detail) {
       var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      evt.initCustomEvent(event, bubbles, cancelable, detail);
       return evt;
     };
-
-    CustomEventPollyfill.prototype = window.Event.prototype;
-
-    window.CustomEvent = CustomEventPollyfill;
+    CustomEventPolyfill.prototype = window.Event.prototype;
+    window.CustomEvent = CustomEventPolyfill;
   }
 
   // ------------------------------------------------
