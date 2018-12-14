@@ -7,11 +7,13 @@
 
   var EVENT_NAME = 'window-scroll';
 
+  var isWindowDefined = typeof window !== 'undefined';
+
   // ------------------------------------------------
   // Passive events support detection
   // ------------------------------------------------
   function detectPassiveEvents() {
-    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+    if (isWindowDefined && typeof window.addEventListener === 'function') {
       var passive = false;
       var options = Object.defineProperty({}, 'passive', {
         get: function() { passive = true; }
@@ -21,8 +23,8 @@
       // when providing a null callback.
       // https://github.com/rafrex/detect-passive-events/pull/3
       var noop = function() {};
-      window.addEventListener('testPassiveEventSupport', noop, options);
-      window.removeEventListener('testPassiveEventSupport', noop, options);
+      window.addEventListener('TEST_PASSIVE_EVENT_SUPPORT', noop, options);
+      window.removeEventListener('TEST_PASSIVE_EVENT_SUPPORT', noop, options);
 
       return passive;
     }
@@ -33,24 +35,9 @@
   var supportsPassiveEvents = detectPassiveEvents();
 
   // ------------------------------------------------
-  // CustomEvent polyfill
+  // Custom Event detection
   // ------------------------------------------------
-  if (typeof window !== 'undefined' && typeof window.CustomEvent !== 'function') {
-    var CustomEventPollyfill = function(event, userParams) {
-      var params = {
-        bubbles: userParams.bubbles || false,
-        cancelable: userParams.cancelable || false,
-        detail: userParams.detail || undefined // eslint-disable-line no-undefined
-      };
-      var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-      return evt;
-    };
-
-    CustomEventPollyfill.prototype = window.Event.prototype;
-
-    window.CustomEvent = CustomEventPollyfill;
-  }
+  var supportsCustomEvents = isWindowDefined && typeof window.CustomEvent === 'function';
 
   // ------------------------------------------------
   // Scroll manager
@@ -125,11 +112,18 @@
     // Fire the event only once per requestAnimationFrame
     if (!ticking) {
       ticking = true;
-      var event = new CustomEvent(EVENT_NAME, {
-        detail: this.getScrollPosition()
-      });
 
-      // Dispatch the event.
+      var event;
+
+      if (supportsCustomEvents) {
+        event = new CustomEvent(EVENT_NAME, {
+          detail: this.getScrollPosition()
+        });
+      } else {
+        event = document.createEvent('CustomEvent');
+        event.initCustomEvent(EVENT_NAME, false, false, this.getScrollPosition());
+      }
+
       window.dispatchEvent(event);
 
       window.requestAnimationFrame(function() {
